@@ -1,0 +1,12 @@
+.main-color {
+    background-color: #575757;
+}
+
+a.main-color:hover,
+a.main-color:focus {
+    background-color: #797979;
+}
+
+.text-color-custom {
+    color: #575757;
+}

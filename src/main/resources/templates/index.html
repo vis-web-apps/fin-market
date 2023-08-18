@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+    <body class="container-fluid" style="width: 80%">
+        <nav th:replace="fragments :: navigation"></nav>
+
+        <h3 class="text-center text-color-custom mb-5 mt-5">Конвертация валют</h3>
+
+        <div class="row">
+            <div class="col-md-6 ml-auto mr-auto">
+                <div class="row">
+                    <div class="col-md-7 text-center">
+                        <p class="mb-0 text-color-custom" style="margin-left: -70%">У меня есть</p>
+                        <input class="form-control " type="number" placeholder="0.00"  value="0.00" step="0.01" required>
+                    </div>
+                    <div class="col-md-5 text-center">
+                        <select class="form-control selectpicker mt-4" id="currencyFrom" name="currencyFrom" required>
+                            <option value="">RUB</option>
+                            <option value="">USD</option>
+                            <option value="">EUR</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+<!--            <div class="col-md-4 ml-auto">-->
+<!--                <div class="card">-->
+<!--                    <div class="card-header main-color text-white">-->
+<!--                        Title1-->
+<!--                    </div>-->
+<!--                    <div class="card-body">-->
+<!--                        <p class="card-text">Body1</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="col-md-1"></div>-->
+<!--            <div class="col-md-4 mr-auto">-->
+<!--                <div class="card">-->
+<!--                    <div class="card-header main-color text-white">-->
+<!--                        Title2-->
+<!--                    </div>-->
+<!--                    <div class="card-body">-->
+<!--                        <p class="card-text">Body2</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 ml-auto mr-auto">
+                <div class="row">
+                    <div class="col-md-7"></div>
+                    <div class="col-md-5 text-center ml-auto mr-auto">
+                        <button type="submit" class="border main-color text-white" th:text="'<>'" style="height: 62%; border-radius: 50%; margin-top: 28px"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div  class="col-md-6 ml-auto mr-auto">
+                <div class="row">
+                    <div class="col-md-7 text-center">
+                        <p class="mb-0 text-color-custom" style="margin-left: -75%">Я получу</p>
+                        <input class="form-control " type="number" placeholder="0.00" step="0.01" disabled>
+                    </div>
+                    <div  class="col-md-5 text-center">
+                        <select class="form-control selectpicker mt-4" id="currencyTo" name="currencyTo" required>
+                            <option value="">RUB</option>
+                            <option value="">USD</option>
+                            <option value="">EUR</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div th:replace="fragments :: scripts"></div>
+    </body>
+
+    <footer th:replace="fragments :: footer"></footer>
+</html>
