@@ -3,7 +3,9 @@
 }
 
 a.main-color:hover,
-a.main-color:focus {
+a.main-color:focus,
+button.main-color:hover,
+button.main-color:focus{
     background-color: #797979;
 }
 
