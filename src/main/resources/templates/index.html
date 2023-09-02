@@ -28,7 +28,7 @@
                 <div class="row">
                     <div class="col-md-7 text-center">
                         <p class="mb-0 text-color-custom" style="margin-left: -70%">У меня есть</p>
-                        <input class="form-control " id="val" type="number" placeholder="0.00" min="0.00a" value="0.00" step="0.01" required>
+                        <input class="form-control " id="val" type="number" placeholder="0.00" min="0.00" value="0.00" step="0.01" required>
                     </div>
                     <div class="col-md-5 text-center">
                         <select class="form-control selectpicker mt-4" id="cur1">
@@ -106,14 +106,14 @@
                                 String(rates[i].quoteCurrency.id) === String(currency2.value)) {
                                 if (String(rates[i].bank.id) === String(bank.value) &&
                                     rates[i].buyRate === false) {
-                                        result.value = Number(val.value)*Number(rates[i].rate)
+                                        result.value = Math.ceil(Number(val.value)*Number(rates[i].rate) * 100) / 100
                                 }
                             } else
                             if (String(rates[i].quoteCurrency.id) === String(currency1.value) &&
                                 String(rates[i].basedCurrency.id) === String(currency2.value)) {
                                 if (String(rates[i].bank.id) === String(bank.value) &&
                                     rates[i].buyRate === true) {
-                                    result.value = Number(val.value)/Number(rates[i].rate)
+                                    result.value = Math.ceil(Number(val.value)/Number(rates[i].rate) * 100) / 100
                                 }
                             }
                         }
