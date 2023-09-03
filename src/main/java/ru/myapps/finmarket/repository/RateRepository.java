@@ -14,6 +14,6 @@ public interface RateRepository extends JpaRepository<Rate, Long> {
 
     @Query("SELECT r FROM Rate r WHERE " +
             "r.quoteCurrency.isoLat3=:currency AND " +
-            ":query IS NULL OR :query='' OR LOWER(r.bank.name) like LOWER(CONCAT('%', :query, '%'))")
+            "(:query IS NULL OR :query='' OR LOWER(r.bank.name) like LOWER(CONCAT('%', :query, '%')))")
     List<Rate> getRubRates(String currency, String query);
 }
