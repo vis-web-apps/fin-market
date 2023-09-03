@@ -24,13 +24,13 @@
                        aria-haspopup="true" aria-expanded="false" th:text="Меню">
                     </a>
                     <div class="dropdown-menu dropdown-menu-right main-color border-white" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item main-color text-white">Главная</a>
-                        <a class="dropdown-item main-color text-white">Конвертер валют</a>
-                        <a class="dropdown-item main-color text-white">Курс валют</a>
-                        <a class="dropdown-item main-color text-white">Накопительные счета</a>
-                        <a class="dropdown-item main-color text-white">Карточные продукты</a>
-                        <a class="dropdown-item main-color text-white">Банки</a>
-                        <a class="dropdown-item main-color text-white">Акции в банках</a>
+                        <a class="dropdown-item main-color text-white" th:href="@{/}">Главная</a>
+                        <a class="dropdown-item main-color text-white" th:href="@{/}">Конвертер валют</a>
+                        <a class="dropdown-item main-color text-white" th:href="@{/rates}">Курс валют</a>
+                        <a class="dropdown-item main-color text-white" th:href="@{/accounts}">Накопительные счета</a>
+                        <a class="dropdown-item main-color text-white" th:href="@{/cards}">Карточные продукты</a>
+                        <a class="dropdown-item main-color text-white" th:href="@{/banks}">Банки</a>
+                        <a class="dropdown-item main-color text-white" th:href="@{/promo}">Акции в банках</a>
                     </div>
                 </li>
             </ul>

@@ -6,6 +6,7 @@
 REPLACE INTO banks VALUES (1, 'Сбербанк', '045004641', 'https://sberbank.ru');
 REPLACE INTO banks VALUES (2, 'ВТБ', '045004788', 'https://vtb.ru');
 REPLACE INTO banks VALUES (3, 'Тинькофф', '044525974', 'https://tinkoff.ru');
+REPLACE INTO banks VALUES (4, 'Альфа', '044525593', 'https://alfabank.ru');
 
 -- --------------------------------------------------------
 
@@ -37,9 +38,9 @@ REPLACE INTO rates VALUES (8, 1, 2, 3, CURRENT_TIMESTAMP(), false, 999999, 99999
 -- В Сбере отношение доллара к юаню - 7.61, лимиты до миллиона
 REPLACE INTO rates VALUES (9, 1, 2, 4, CURRENT_TIMESTAMP(), true, 999999, 999999, 7.61);
 REPLACE INTO rates VALUES (10, 1, 2, 4, CURRENT_TIMESTAMP(), false, 999999, 999999, 6.98);
--- В Сбере отношение рубля к юаню - 0,08, лимиты до миллиона
-REPLACE INTO rates VALUES (11, 1, 3, 4, CURRENT_TIMESTAMP(), true, 999999, 999999, 0.08);
-REPLACE INTO rates VALUES (12, 1, 3, 4, CURRENT_TIMESTAMP(), false, 999999, 999999, 0.07);
+-- В Сбере отношение юаня к рублю - 13,15, лимиты до миллиона
+REPLACE INTO rates VALUES (11, 1, 4, 3, CURRENT_TIMESTAMP(), true, 999999, 999999, 13.15);
+REPLACE INTO rates VALUES (12, 1, 4, 3, CURRENT_TIMESTAMP(), false, 999999, 999999, 12.80);
 ---
 -- В ВТБ отношение евро к доллару - 1.02, лимиты до миллиона
 REPLACE INTO rates VALUES (13, 2, 1, 2, CURRENT_TIMESTAMP(), true, 999999, 999999, 1.02);
@@ -56,9 +57,9 @@ REPLACE INTO rates VALUES (20, 2, 2, 3, CURRENT_TIMESTAMP(), false, 999999, 9999
 -- В ВТБ отношение доллара к юаню - 7.66, лимиты до миллиона
 REPLACE INTO rates VALUES (21, 2, 2, 4, CURRENT_TIMESTAMP(), true, 999999, 999999, 7.66);
 REPLACE INTO rates VALUES (22, 2, 2, 4, CURRENT_TIMESTAMP(), false, 999999, 999999, 7.03);
--- В ВТБ отношение рубля к юаню - 0,09, лимиты до миллиона
-REPLACE INTO rates VALUES (23, 2, 3, 4, CURRENT_TIMESTAMP(), true, 999999, 999999, 0.09);
-REPLACE INTO rates VALUES (24, 2, 3, 4, CURRENT_TIMESTAMP(), false, 999999, 999999, 0.08);
+-- В ВТБ отношение юаня к рублю - 13,25, лимиты до миллиона
+REPLACE INTO rates VALUES (23, 2, 4, 3, CURRENT_TIMESTAMP(), true, 999999, 999999, 13.25);
+REPLACE INTO rates VALUES (24, 2, 4, 3, CURRENT_TIMESTAMP(), false, 999999, 999999, 12.85);
 ---
 -- В Тинькофф отношение евро к доллару - 1.11, лимиты до миллиона
 REPLACE INTO rates VALUES (25, 3, 1, 2, CURRENT_TIMESTAMP(), true, 999999, 999999, 1.11);
@@ -75,6 +76,25 @@ REPLACE INTO rates VALUES (32, 3, 2, 3, CURRENT_TIMESTAMP(), false, 999999, 9999
 -- В Тинькофф отношение доллара к юаню - 7.67, лимиты до миллиона
 REPLACE INTO rates VALUES (33, 3, 2, 4, CURRENT_TIMESTAMP(), true, 999999, 999999, 7.67);
 REPLACE INTO rates VALUES (34, 3, 2, 4, CURRENT_TIMESTAMP(), false, 999999, 999999, 7.11);
--- В Тинькофф отношение рубля к юаню - 0,08, лимиты до миллиона
-REPLACE INTO rates VALUES (35, 3, 3, 4, CURRENT_TIMESTAMP(), true, 999999, 999999, 0.08);
-REPLACE INTO rates VALUES (36, 3, 3, 4, CURRENT_TIMESTAMP(), false, 999999, 999999, 0.08);
+-- В Тинькофф отношение юаня к рублю - 13,45, лимиты до миллиона
+REPLACE INTO rates VALUES (35, 3, 4, 3, CURRENT_TIMESTAMP(), true, 999999, 999999, 13.45);
+REPLACE INTO rates VALUES (36, 3, 4, 3, CURRENT_TIMESTAMP(), false, 999999, 999999, 13.00);
+---
+-- В Альфа отношение евро к доллару - 1.20, лимиты до миллиона
+REPLACE INTO rates VALUES (37, 4, 1, 2, CURRENT_TIMESTAMP(), true, 999999, 999999, 1.20);
+REPLACE INTO rates VALUES (38, 4, 1, 2, CURRENT_TIMESTAMP(), false, 999999, 999999, 1.08);
+-- В Альфа отношение евро к рублю - 105.1, лимиты до миллиона
+REPLACE INTO rates VALUES (39, 4, 1, 3, CURRENT_TIMESTAMP(), true, 999999, 999999, 105.1);
+REPLACE INTO rates VALUES (40, 4, 1, 3, CURRENT_TIMESTAMP(), false, 999999, 999999, 101.1);
+-- В Альфа отношение евро к юаню - 8.01, лимиты до миллиона
+REPLACE INTO rates VALUES (41, 4, 1, 4, CURRENT_TIMESTAMP(), true, 999999, 999999, 8.01);
+REPLACE INTO rates VALUES (42, 4, 1, 4, CURRENT_TIMESTAMP(), false, 999999, 999999, 7.76);
+-- В Альфа отношение доллара к рублю - 99.55, лимиты до миллиона
+REPLACE INTO rates VALUES (43, 4, 2, 3, CURRENT_TIMESTAMP(), true, 999999, 999999, 99.55);
+REPLACE INTO rates VALUES (44, 4, 2, 3, CURRENT_TIMESTAMP(), false, 999999, 999999, 93.85);
+-- В Альфа отношение доллара к юаню - 7.87, лимиты до миллиона
+REPLACE INTO rates VALUES (45, 4, 2, 4, CURRENT_TIMESTAMP(), true, 999999, 999999, 7.87);
+REPLACE INTO rates VALUES (46, 4, 2, 4, CURRENT_TIMESTAMP(), false, 999999, 999999, 7.31);
+-- В Альфа отношение юаня к рублю - 13,15, лимиты до миллиона
+REPLACE INTO rates VALUES (47, 4, 4, 3, CURRENT_TIMESTAMP(), true, 999999, 999999, 13.15);
+REPLACE INTO rates VALUES (48, 4, 4, 3, CURRENT_TIMESTAMP(), false, 999999, 999999, 12.90);
