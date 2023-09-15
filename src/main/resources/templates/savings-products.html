@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"><title>Финансовый супермаркет</title></head>
+
+<body class="container-fluid" style="width: 80%; margin-bottom: 100px">
+
+    <nav th:replace="fragments :: navigation"></nav>
+
+    <h3 class="text-center text-color-custom mb-5 mt-5">Накопительные продукты</h3>
+
+    <div class="form-row mb-4" th:each="product : ${savingsProducts}">
+        <div class="card col-xs-12 col-md-8 ml-auto mr-auto" style="padding: 0 0">
+            <div class="card-header main-color text-white" th:text="${product.name + ' от ' + product.bank.name}"></div>
+            <div class="card-body pt-0 pb-0">
+                <div class="row mb-2 mt-2">
+                    <p class="col-sm-5 col-md-5"></p>
+                    <p class="text-color-custom text-center col-sm-2 col-md-2 h6"><i>Валюта</i></p>
+                    <p class="text-color-custom text-center col-sm-2 col-md-2 h6"><i>Макс.</i></p>
+                    <p class="text-color-custom text-center col-sm-2 col-md-2 h6"><i>Ставка</i></p>
+                    <p class="col-sm-1 col-md-1"></p>
+                </div>
+                <div class="row mb-2">
+                    <p class="card-text col-sm-5 col-md-5" th:text="${product.promoInfo}"></p>
+                    <p class="card-text text-center col-sm-2 col-md-2" th:text="${product.currency.isoLat3}"></p>
+                    <p class="card-text text-center col-sm-2 col-md-2" th:text="${product.sum}"></p>
+                    <p class="card-text text-center col-sm-2 col-md-2" th:text="${product.rate}"></p>
+    <!--            TODO: visible only admin-->
+                    <div class="p-0 col-sm-1 col-md-1">
+                        <a class="pt-0 text-white btn main-color" style="height: 70%">🖉</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--        <table id="rates" class="table table-bordered col-md-8 ml-auto mr-auto">-->
+        <!--            <thead class="main-color text-white">-->
+        <!--                <tr>-->
+        <!--                    <th class="text-center" style="width: 40%">Банк</th>-->
+        <!--                    <th class="text-center" style="width: 20%">Валюта</th>-->
+        <!--                    <th class="text-center" style="width: 20%">Покупка</th>-->
+        <!--                    <th class="text-center" style="width: 20%">Продажа</th>-->
+        <!--                </tr>-->
+        <!--            </thead>-->
+        <!--            <tbody th:each="rate : ${rates}">-->
+        <!--                <tr>-->
+        <!--                    <th class="text-center pt-1 pb-1" th:text="${rate.bankName}"></th>-->
+        <!--                    <th class="text-center pt-1 pb-1" th:text="${rate.currencyName}"></th>-->
+        <!--                    <th class="text-center pt-1 pb-1" th:text="${rate.buySum}"></th>-->
+        <!--                    <th class="text-center pt-1 pb-1" th:text="${rate.saleSum}"></th>-->
+        <!--                </tr>-->
+        <!--            </tbody>-->
+        <!--        </table>-->
+    </div>
+    <div th:replace="fragments :: scripts"></div>
+
+</body>
+
+<footer th:replace="fragments :: footer"></footer>
+</html>

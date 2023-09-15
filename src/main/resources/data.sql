@@ -98,3 +98,17 @@ REPLACE INTO rates VALUES (46, 4, 2, 4, CURRENT_TIMESTAMP(), false, 999999, 9999
 -- В Альфа отношение юаня к рублю - 13,15, лимиты до миллиона
 REPLACE INTO rates VALUES (47, 4, 4, 3, CURRENT_TIMESTAMP(), true, 999999, 999999, 13.15);
 REPLACE INTO rates VALUES (48, 4, 4, 3, CURRENT_TIMESTAMP(), false, 999999, 999999, 12.90);
+
+-- --------------------------------------------------------
+
+--
+-- Тестовые данные для таблицы Savings_products
+--
+REPLACE INTO savings_products VALUES (1, 1, 'СБЕРегательный', 11.0, 1100000.00, 3, 'Сбер накопит лучше Вас!');
+REPLACE INTO savings_products VALUES (2, 2, 'Вклад под 12%', 12.0, 1200000.00, 3, 'ВТБ накопит лучше Вас!');
+REPLACE INTO savings_products VALUES (3, 3, 'Студенческий', 10.0, 200000.00, 3, 'Выгодные условия для студентов');
+REPLACE INTO savings_products VALUES (4, 1, 'Валютный (USD)', 8.0, 10000.00, 2, 'Накопим баксов');
+REPLACE INTO savings_products VALUES (5, 1, 'Валютный (EUR)', 8.0, 10000.00, 1, 'Подкопи и в Европу рвани!');
+REPLACE INTO savings_products VALUES (6, 3, 'Выгодный', 13.0, 100000.00, 3, 'Тинькофф накопит лучше Вас!');
+
+-- --------------------------------------------------------
