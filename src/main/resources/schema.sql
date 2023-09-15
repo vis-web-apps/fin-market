@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS currencies (
 
 CREATE TABLE IF NOT EXISTS rates (
                      id int(11) NOT NULL IDENTITY PRIMARY KEY,
-                     bank_id varchar(30) NOT NULL,
+                     bank_id int(11) NOT NULL,
                      b_cur_id int(11) NOT NULL,
                      q_cur_id int(11) NOT NULL,
                      start_date_time timestamp NOT NULL,
@@ -25,6 +25,18 @@ CREATE TABLE IF NOT EXISTS rates (
                      foreign key (bank_id) references banks(id) ON DELETE CASCADE,
                      foreign key (b_cur_id) references currencies(id) ON DELETE CASCADE,
                      foreign key (q_cur_id) references currencies(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS savings_products (
+                    id int(11) NOT NULL IDENTITY PRIMARY KEY,
+                    bank_id int(11) NOT NULL,
+                    name varchar(50) NOT NULL,
+                    rate decimal(10,2),
+                    sum decimal(10,2),
+                    cur_id  int(11) NOT NULL,
+                    promo_info text,
+                    foreign key (bank_id) references banks(id) ON DELETE CASCADE,
+                    foreign key (cur_id) references currencies(id) ON DELETE CASCADE,
 );
 
 CREATE TABLE IF NOT EXISTS promo (
