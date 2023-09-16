@@ -24,9 +24,8 @@
                     <p class="card-text text-center col-sm-2 col-md-2" th:text="${product.currency.isoLat3}"></p>
                     <p class="card-text text-center col-sm-2 col-md-2" th:text="${product.sum}"></p>
                     <p class="card-text text-center col-sm-2 col-md-2" th:text="${product.rate}"></p>
-    <!--            TODO: visible only admin-->
                     <div class="p-0 col-sm-1 col-md-1">
-                        <a class="pt-0 text-white btn main-color" style="height: 70%">🖉</a>
+                        <a class="pl-3 pt-0 text-white btn main-color" th:hidden="${#authentication.principal == 'anonymousUser'}" style="height: 70%; width: 70%">🖉</a>
                     </div>
                 </div>
             </div>

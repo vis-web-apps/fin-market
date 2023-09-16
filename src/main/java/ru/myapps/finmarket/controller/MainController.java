@@ -16,13 +16,23 @@ public class MainController {
     private final CurrencyService currencyService;
     private final RateService rateService;
 
+    @GetMapping(value = "/login")
+    public String login() {
+        return "login";
+    }
+
     @GetMapping(value = "/")
-    public String get(Model model) {
+    public String getMainPage(Model model) {
         model.addAttribute("banks", bankService.getAllBanks());
         model.addAttribute("currencies", currencyService.getAllCurrencies());
         model.addAttribute("rates", rateService.getAllRates());
 
         return "index";
+    }
+
+    @GetMapping(value = "/admin")
+    public String getAdminPage() {
+        return "admin";
     }
 
 }

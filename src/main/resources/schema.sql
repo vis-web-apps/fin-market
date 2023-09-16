@@ -1,3 +1,24 @@
+CREATE TABLE IF NOT EXISTS role (
+                                    id int(11) NOT NULL IDENTITY PRIMARY KEY,
+                                    name varchar(10) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS users (
+                                     id int(11) NOT NULL IDENTITY PRIMARY KEY,
+                                     login varchar(20) NOT NULL,
+                                     password varchar(100) NOT NULL,
+                                     email varchar(30) NOT NULL,
+                                     phone varchar(20) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS user_role (
+                                         user_id int(11) NOT NULL,
+                                         role_id int(11) NOT NULL,
+                                         foreign key (user_id) references users(id),
+                                         foreign key (role_id) references role(id),
+                                         primary key (user_id, role_id)
+);
+
 CREATE TABLE IF NOT EXISTS banks (
                     id int(11) NOT NULL IDENTITY PRIMARY KEY,
                     name varchar(30) NOT NULL,
