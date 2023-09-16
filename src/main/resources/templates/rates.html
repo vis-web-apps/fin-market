@@ -10,7 +10,7 @@
 
         <div class="form-row mb-2">
             <form class="container mt-0 mb-0 col-md-6 ml-auto mr-auto" th:action="@{/rates}" method="get">
-                <div class="form-row ">
+                <div class="form-row">
                     <div class="form-group col-md-6">
                         <input type="text" class="form-control" id="query" name="query" placeholder="Введите название банка..." th:value="${query == null ? '' : query}">
                     </div>
@@ -36,9 +36,8 @@
                                 <p class="card-text text-center col-xs-5 col-md-5" th:text="${elem.currencyName}"></p>
                                 <p class="card-text text-center col-xs-3 col-md-3" th:text="${elem.buySum}"></p>
                                 <p class="card-text text-center col-xs-3 col-md-3" th:text="${elem.saleSum}"></p>
-<!--                                TODO: visible only admin-->
                                 <div class="p-0 col-xs-1 col-md-1">
-                                    <a class="pt-0 text-white btn main-color" style="height: 70%">🖉</a>
+                                    <a class="pl-2 pt-0 text-white btn main-color" th:hidden="${#authentication.principal == 'anonymousUser'}" style="height: 70%; width: 60%">🖉</a>
                                 </div>
                             </div>
                         </div>

@@ -1,6 +1,30 @@
 -- --------------------------------------------------------
 
 --
+-- Test data for table role
+--
+
+REPLACE INTO role VALUES (1, 'ROLE_ADMIN');
+
+-- --------------------------------------------------------
+
+--
+-- Test data for table users
+--
+
+REPLACE INTO users VALUES (1, 'admin', '$2a$10$sr8g0Ty9X4E43nAvQxbC8O5lgwo8v/aIQ/kd1MXpwwin8sWWl4NsG', 'admin@mail.com', '253-00-90');
+
+-- --------------------------------------------------------
+
+--
+-- Test data for table user_role
+--
+
+REPLACE INTO user_role VALUES (1, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Тестовые данные для таблицы Banks
 --
 REPLACE INTO banks VALUES (1, 'Сбербанк', '045004641', 'https://sberbank.ru');
