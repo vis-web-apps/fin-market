@@ -34,7 +34,7 @@
             <label for="login" class="sr-only">Login</label>
             <input type="text" id="login" name="login" class="form-control" placeholder="Login" required autofocus />
             <label for="password" class="sr-only">Password</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required />
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password" autocomplete="on" required />
             <div class="alert alert-danger" role="alert" th:if="${param.error}">
                 The login or password is incorrect!
             </div>

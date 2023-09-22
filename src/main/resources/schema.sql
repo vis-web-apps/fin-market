@@ -21,8 +21,8 @@ CREATE TABLE IF NOT EXISTS user_role (
 
 CREATE TABLE IF NOT EXISTS banks (
                     id int(11) NOT NULL IDENTITY PRIMARY KEY,
-                    name varchar(30) NOT NULL,
-                    bic varchar(9) NOT NULL,
+                    name varchar(30) NOT NULL UNIQUE,
+                    bic varchar(9) NOT NULL UNIQUE,
                     web_site varchar(30)
 );
 
