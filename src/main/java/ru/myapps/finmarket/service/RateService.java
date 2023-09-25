@@ -2,6 +2,7 @@ package ru.myapps.finmarket.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.myapps.finmarket.dto.RateDto;
 import ru.myapps.finmarket.entity.Bank;
 import ru.myapps.finmarket.entity.Currency;
@@ -23,6 +24,7 @@ public class RateService {
         return repository.findAllByOrderByStartDateTimeDesc();
     }
 
+    @Transactional
     public void createRate(Long bankId, Long currencyId, BigDecimal rateBuySum, BigDecimal rateSaleSum) {
         Bank bank = bankService.getById(bankId);
         Currency basedCurrency = currencyService.getCurrencyById(currencyId);
@@ -52,6 +54,7 @@ public class RateService {
         repository.save(buyRate);
     }
 
+    @Transactional
     public void editRate(Long bankId, String currencyName, BigDecimal rateBuySum, BigDecimal rateSaleSum) {
         repository.getRubRates("RUB", "").stream()
                 .filter(rate -> rate.getBank().getId().equals(bankId) && rate.getBasedCurrency().getIsoLat3().equals(currencyName))
