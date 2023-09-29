@@ -8,6 +8,17 @@
 
     <h3 class="text-center text-color-custom mb-5 mt-5">Накопительные продукты</h3>
 
+    <div class="row mb-3">
+        <div class="col-md-8 ml-auto mr-auto">
+            <div class="row">
+                <div class="col-md-10"></div>
+                <div class="col-md-2 ml-auto">
+                    <a class="btn btn-success text-white btn-create-product" th:hidden="${#authentication.principal == 'anonymousUser'}" style="width: 100%">Создать</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="form-row mb-4" th:each="product : ${savingsProducts}">
         <div class="card col-xs-12 col-md-8 ml-auto mr-auto" style="padding: 0 0">
             <div class="card-header main-color text-white" th:text="${product.name + ' от ' + product.bank.name}"></div>
@@ -25,34 +36,181 @@
                     <p class="card-text text-center col-sm-2 col-md-2" th:text="${product.sum}"></p>
                     <p class="card-text text-center col-sm-2 col-md-2" th:text="${product.rate}"></p>
                     <div class="p-0 col-sm-1 col-md-1">
-                        <a class="pl-3 pt-0 text-white btn main-color" th:hidden="${#authentication.principal == 'anonymousUser'}" style="height: 70%; width: 70%">🖉</a>
+                        <a class="pl-2 pt-0 text-white btn main-color btn-edit-product" th:hidden="${#authentication.principal == 'anonymousUser'}"
+                           style="height: 70%; width: 45%"
+                           th:product-id="${product.id}"
+                           th:product-name="${product.name}"
+                           th:product-promo="${product.promoInfo}"
+                           th:product-bank-id="${product.bank.id}"
+                           th:product-bank-name="${product.bank.name}"
+                           th:product-currency-id="${product.currency.id}"
+                           th:product-currency-name="${product.currency.isoLat3}"
+                           th:product-sum="${product.sum}"
+                           th:product-rate="${product.rate}"
+                        >🖉</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!--        <table id="rates" class="table table-bordered col-md-8 ml-auto mr-auto">-->
-        <!--            <thead class="main-color text-white">-->
-        <!--                <tr>-->
-        <!--                    <th class="text-center" style="width: 40%">Банк</th>-->
-        <!--                    <th class="text-center" style="width: 20%">Валюта</th>-->
-        <!--                    <th class="text-center" style="width: 20%">Покупка</th>-->
-        <!--                    <th class="text-center" style="width: 20%">Продажа</th>-->
-        <!--                </tr>-->
-        <!--            </thead>-->
-        <!--            <tbody th:each="rate : ${rates}">-->
-        <!--                <tr>-->
-        <!--                    <th class="text-center pt-1 pb-1" th:text="${rate.bankName}"></th>-->
-        <!--                    <th class="text-center pt-1 pb-1" th:text="${rate.currencyName}"></th>-->
-        <!--                    <th class="text-center pt-1 pb-1" th:text="${rate.buySum}"></th>-->
-        <!--                    <th class="text-center pt-1 pb-1" th:text="${rate.saleSum}"></th>-->
-        <!--                </tr>-->
-        <!--            </tbody>-->
-        <!--        </table>-->
+        <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form class="container mt-2 mb-2">
+                        <div class="modal-header main-color">
+                            <h4 class="modal-title text-white" id="createModalLabel">Создание накопительного продукта</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span class="text-white" aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="text-center">
+                            <div class="form-row mb-2">
+                                <div class="form-group col-sm-12">
+
+                                    <div class="form-row mb-2">
+                                        <div class="form-group col-sm-12">
+                                            <label for="name" class="h5 mb-3">Название</label>
+                                            <input type="text" class="form-control" id="name" name="name" placeholder="Название..." required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mb-2">
+                                        <div class="form-group col-sm-12">
+                                            <label for="promo" class="h5 mb-3">Промо информация</label>
+                                            <textarea type="text" class="form-control" id="promo" name="promo" placeholder="Промо..." rows="2" style="min-height: 50px" required></textarea>
+                                        </div>
+                                    </div>
+
+                                    <label for="bank-name" class="h5 mt-3 mb-3">Банк:</label>
+                                    <select class="form-control selectpicker" id="bank-name" name="bank">
+                                        <option th:each="bank : ${banks}"
+                                                th:value="${bank.id}"
+                                                th:text="${bank.name}">
+                                        </option>
+                                    </select>
+
+                                    <label for="currency-name" class="h5 mt-3 mb-3">Валюта:</label>
+                                    <select class="form-control selectpicker" id="currency-name" name="currency">
+                                        <option th:each="currency : ${currencies}"
+                                                th:value="${currency.id}"
+                                                th:text="${currency.isoLat3}">
+                                        </option>
+                                    </select>
+
+                                    <label for="sum" class="h5 mt-3 mb-3">Максимальная сумма:</label>
+                                    <input id="sum" type="number" class="form-control" name="sum" placeholder="0.00" value="0.00" step="0.01" required>
+
+                                    <label for="rate" class="h5 mt-3 mb-3">Ставка:</label>
+                                    <input id="rate" type="number" class="form-control" name="rate" placeholder="0.00" value="0.00" step="0.01" required>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                            <button type="submit" th:formaction="@{/savings-products/create}" th:formmethod="post" class="btn btn-success">Создать</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form class="container mt-2 mb-2">
+                        <div class="modal-header main-color">
+                            <h4 class="modal-title text-white" id="editModalLabel">Редактирование накопительного продукта</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span class="text-white" aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="text-center">
+                            <div class="form-row mb-2">
+                                <div class="form-group col-sm-12">
+
+                                    <input type="text" name="id" hidden>
+                                    <div class="form-row mb-2">
+                                        <div class="form-group col-sm-12">
+                                            <label for="create-name" class="h5 mb-3">Название</label>
+                                            <input type="text" class="form-control" id="create-name" name="name" placeholder="Название..." required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mb-2">
+                                        <div class="form-group col-sm-12">
+                                            <label for="create-promo" class="h5 mb-3">Промо информация</label>
+                                            <textarea type="text" class="form-control" id="create-promo" name="promo" placeholder="Промо..." rows="2" style="min-height: 50px" required></textarea>
+                                        </div>
+                                    </div>
+
+                                    <label for="create-bank-name" class="h5 mt-3 mb-3">Банк:</label>
+                                    <select class="form-control selectpicker" id="create-bank-name" name="bank">
+                                        <option id="default-bank"></option>
+                                        <option th:each="bank : ${banks}"
+                                                th:value="${bank.id}"
+                                                th:text="${bank.name}">
+                                        </option>
+                                    </select>
+
+                                    <label for="create-currency-name" class="h5 mt-3 mb-3">Валюта:</label>
+                                    <select class="form-control selectpicker" id="create-currency-name" name="currency">
+                                        <option id="default-currency"></option>
+                                        <option th:each="currency : ${currencies}"
+                                                th:value="${currency.id}"
+                                                th:text="${currency.isoLat3}">
+                                        </option>
+                                    </select>
+
+                                    <label for="create-sum" class="h5 mt-3 mb-3">Максимальная сумма:</label>
+                                    <input id="create-sum" type="number" class="form-control" name="sum" placeholder="0.00" value="0.00" step="0.01" required>
+
+                                    <label for="create-rate" class="h5 mt-3 mb-3">Ставка:</label>
+                                    <input id="create-rate" type="number" class="form-control" name="rate" placeholder="0.00" value="0.00" step="0.01" required>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                            <button type="submit" th:formaction="@{/savings-products/edit}" th:formmethod="post" class="btn btn-success">Сохранить</button>
+                            <button type="submit" th:formaction="@{/savings-products/delete}" th:formmethod="post" class="btn btn-danger">Удалить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </div>
-    <div th:replace="fragments :: scripts"></div>
 
 </body>
+
+<script th:inline="javascript">
+
+    $('.btn-edit-product').click(function () {
+        let $modal = $('#editModal').clone().removeAttr('id');
+        let $btn = $(this);
+
+        $modal.find('[id="create-name"]').val($btn.attr('product-name'));
+        $modal.find('[id="create-promo"]').val($btn.attr('product-promo'));
+        $modal.find('[id="default-bank"]').val($btn.attr('product-bank-id'));
+        $modal.find('[id="default-bank"]').text('Было: ' + $btn.attr('product-bank-name'));
+        $modal.find('[id="default-currency"]').val($btn.attr('product-currency-id'));
+        $modal.find('[id="default-currency"]').text('Было: ' + $btn.attr('product-currency-name'));
+
+        $modal.find('[id="create-sum"]').val($btn.attr('product-sum'));
+        $modal.find('[id="create-rate"]').val($btn.attr('product-rate'));
+        $modal.find('[name="id"]').val($btn.attr('product-id'));
+
+        $modal.modal();
+    });
+
+    $('.btn-create-product').click(function () {
+        let $modal = $('#createModal').clone().removeAttr('id');
+        $modal.modal();
+    })
+</script>
 
 <footer th:replace="fragments :: footer"></footer>
 </html>
