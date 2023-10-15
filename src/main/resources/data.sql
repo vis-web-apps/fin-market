@@ -136,3 +136,15 @@ REPLACE INTO savings_products VALUES (5, 1, 'Валютный (EUR)', 8.0, 10000
 REPLACE INTO savings_products VALUES (6, 3, 'Выгодный', 13.0, 100000.00, 3, 'Тинькофф накопит лучше Вас!');
 
 -- --------------------------------------------------------
+
+--
+-- Тестовые данные для таблицы Cards_products
+--
+REPLACE INTO cards_products VALUES (1, 1, 'МиРРрр', false, false, true, false, 'https://sberbank.ru');
+REPLACE INTO cards_products VALUES (2, 2, 'Карта', true, false, true, false, 'https://vtb.ru');
+REPLACE INTO cards_products VALUES (3, 3, 'Студенческая', true, false, true, true, 'https://tinkoff.ru');
+REPLACE INTO cards_products VALUES (4, 4, 'Мастер кард', true, false, true, false, 'https://alfabank.ru');
+REPLACE INTO cards_products VALUES (5, 3, 'МИР Привилегия', true, false, true, false, 'https://tinkoff.ru');
+REPLACE INTO cards_products VALUES (6, 3, 'МИР Привилегия +', true, false, true, false, 'https://tinkoff.ru');
+
+-- --------------------------------------------------------

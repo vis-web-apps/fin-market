@@ -60,6 +60,18 @@ CREATE TABLE IF NOT EXISTS savings_products (
                     foreign key (cur_id) references currencies(id) ON DELETE CASCADE,
 );
 
+CREATE TABLE IF NOT EXISTS cards_products (
+                    id int(11) NOT NULL IDENTITY PRIMARY KEY,
+                    bank_id int(11) NOT NULL,
+                    name varchar(50) NOT NULL,
+                    cashback boolean DEFAULT FALSE,
+                    miles boolean DEFAULT FALSE,
+                    points boolean DEFAULT FALSE,
+                    service_free boolean DEFAULT FALSE,
+                    website_link varchar(50),
+                    foreign key (bank_id) references banks(id) ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS promo (
                      id int(11) NOT NULL IDENTITY PRIMARY KEY,
                      bank_id varchar(30) NOT NULL,

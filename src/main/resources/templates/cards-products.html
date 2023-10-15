@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"><title>Финансовый супермаркет</title></head>
+
+<body class="container-fluid" style="width: 80%; margin-bottom: 100px">
+    <nav th:replace="fragments :: navigation"></nav>
+
+    <h3 class="text-center text-color-custom mb-5 mt-5">Карточные продукты</h3>
+
+    <div class="row mb-3">
+        <div class="col-md-8 ml-auto mr-auto">
+            <div class="row">
+                <div class="col-md-10"></div>
+                <div class="col-md-2 ml-auto">
+                    <a class="btn btn-success text-white btn-create-card" th:hidden="${#authentication.principal == 'anonymousUser'}" style="width: 100%">Создать</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row mb-4" th:each="card : ${cardsProducts}">
+        <div class="card col-xs-12 col-md-8 ml-auto mr-auto" style="padding: 0 0">
+            <div class="card-header main-color text-white" th:text="${card.name + ' от ' + card.bank.name}"></div>
+            <div class="card-body pt-0 pb-0">
+                <div class="row mb-2 mt-2">
+                    <p class="col-sm-1 col-md-1"></p>
+                    <p class="text-color-custom text-center col-sm-2 col-md-2 h6"><i>Кэшбэк</i></p>
+                    <p class="text-color-custom text-center col-sm-2 col-md-2 h6"><i>Мили</i></p>
+                    <p class="text-color-custom text-center col-sm-2 col-md-2 h6"><i>Бонусы</i></p>
+                    <p class="text-color-custom text-center col-sm-2 col-md-2 h6"><i>Платная</i></p>
+                    <p class="card-text text-center col-sm-1 col-md-1"></p>
+                    <p class="col-sm-2 col-md-2"></p>
+                </div>
+                <div class="row mb-2">
+                    <p class="card-text text-center col-sm-1 col-md-1"></p>
+                    <p class="card-text text-center col-sm-2 col-md-2" th:text="${card.cashback} ? '✓' : '&times;'"></p>
+                    <p class="card-text text-center col-sm-2 col-md-2" th:text="${card.miles} ? '✓' : '&times;'"></p>
+                    <p class="card-text text-center col-sm-2 col-md-2" th:text="${card.points} ? '✓' : '&times;'"></p>
+                    <p class="card-text text-center col-sm-2 col-md-2" th:text="${card.serviceFree} ? '✓' : '&times;'"></p>
+                    <p class="card-text text-center col-sm-1 col-md-1"></p>
+                    <div class="p-0 col-sm-2 col-md-2">
+                        <a class="pl-2 pt-0 text-white btn main-color" th:href="${card.websiteLink}" style="height: 70%; width: 45%">Инфо</a>
+                        <a class="pl-2 pt-0 text-white btn main-color btn-edit-card" th:hidden="${#authentication.principal == 'anonymousUser'}"
+                               style="height: 70%; width: 45%"
+                               th:card-id="${card.id}"
+                               th:card-name="${card.name}"
+                               th:card-bank-id="${card.bank.id}"
+                               th:card-bank-name="${card.bank.name}"
+                               th:card-cashback="${card.cashback}"
+                               th:card-mile="${card.miles}"
+                               th:card-point="${card.points}"
+                               th:card-service-free="${card.serviceFree}"
+                               th:card-info-url="${card.websiteLink}"
+                            >🖉</a>
+                        </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form class="container mt-2 mb-2">
+                        <div class="modal-header main-color">
+                            <h4 class="modal-title text-white" id="createModalLabel">Создание карточного продукта</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span class="text-white" aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="text-center">
+                            <div class="form-row mb-2">
+                                <div class="form-group col-sm-12">
+
+                                    <div class="form-row mt-3">
+                                        <div class="form-group col-sm-12">
+                                            <label for="name" class="h5 mb-3">Название</label>
+                                            <input type="text" class="form-control" id="name" name="name" placeholder="Название..." required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mt-3">
+                                        <div class="form-group col-sm-12">
+                                            <label for="bank-name" class="h5 mb-3">Банк:</label>
+                                            <select class="form-control selectpicker" id="bank-name" name="bank">
+                                                <option th:each="bank : ${banks}"
+                                                        th:value="${bank.id}"
+                                                        th:text="${bank.name}">
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mt-3">
+                                        <div class="form-group col-sm-12">
+                                            <label for="info-url" class="h5 mb-3">Сайт</label>
+                                            <input type="text" class="form-control" id="info-url" name="infoUrl" placeholder="Сайт..." required>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-3">
+                                        <label for="cashback" class="h5 mb-3 col-md-6 text-left">Кэшбэк:</label>
+                                        <input id="cashback" type="checkbox" class="col-md-6" name="cashback" th:checked="false">
+                                    </div>
+
+                                    <div class="mt-3">
+                                        <label for="mile" class="h5 mb-3 col-md-6 text-left">Мили:</label>
+                                        <input id="mile" type="checkbox" class="col-md-6" name="mile" th:checked="false">
+                                    </div>
+
+                                    <div class="mt-3">
+                                        <label for="point" class="h5 mb-3 col-md-6 text-left">Бонусы:</label>
+                                        <input id="point" type="checkbox" class="col-md-6" name="point">
+                                    </div>
+
+                                    <div class="mt-3">
+                                        <label for="free" class="h5 mb-3 col-md-6 text-left">Платная:</label>
+                                        <input id="free" type="checkbox" class="col-md-6" name="free">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                            <button type="submit" th:formaction="@{/cards-products/create}" th:formmethod="post" class="btn btn-success">Создать</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form class="container mt-2 mb-2">
+                        <div class="modal-header main-color">
+                            <h4 class="modal-title text-white" id="editModalLabel">Редактирование карточного продукта</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span class="text-white" aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="text-center">
+                            <div class="form-row mb-2">
+                                <div class="form-group col-sm-12">
+
+                                    <input type="text" name="id" hidden>
+                                    <div class="form-row mt-3">
+                                        <div class="form-group col-sm-12">
+                                            <label for="create-name" class="h5 mb-3">Название</label>
+                                            <input type="text" class="form-control" id="create-name" name="name" placeholder="Название..." required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mt-3">
+                                        <div class="form-group col-sm-12">
+                                            <label for="create-bank-name" class="h5 mb-3">Банк:</label>
+                                            <select class="form-control selectpicker" id="create-bank-name" name="bank">
+                                                <option id="default-bank"></option>
+                                                <option th:each="bank : ${banks}"
+                                                        th:value="${bank.id}"
+                                                        th:text="${bank.name}">
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mt-3">
+                                        <div class="form-group col-sm-12">
+                                            <label for="create-info-url" class="h5 mb-3">Сайт</label>
+                                            <input type="text" class="form-control" id="create-info-url" name="infoUrl" placeholder="Сайт..." required>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-3">
+                                        <label for="create-cashback" class="h5 mb-3 col-md-6 text-left">Кэшбэк:</label>
+                                        <input id="create-cashback" type="checkbox" class="col-md-6" name="cashback" th:checked="false">
+                                    </div>
+
+                                    <div class="mt-3">
+                                        <label for="create-mile" class="h5 mb-3 col-md-6 text-left">Мили:</label>
+                                        <input id="create-mile" type="checkbox" class="col-md-6" name="mile" th:checked="false">
+                                    </div>
+
+                                    <div class="mt-3">
+                                        <label for="create-point" class="h5 mb-3 col-md-6 text-left">Бонусы:</label>
+                                        <input id="create-point" type="checkbox" class="col-md-6" name="point">
+                                    </div>
+
+                                    <div class="mt-3">
+                                        <label for="create-free" class="h5 mb-3 col-md-6 text-left">Платная:</label>
+                                        <input id="create-free" type="checkbox" class="col-md-6" name="free">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                            <button type="submit" th:formaction="@{/cards-products/edit}" th:formmethod="post" class="btn btn-success">Сохранить</button>
+                            <button type="submit" th:formaction="@{/cards-products/delete}" th:formmethod="post" class="btn btn-danger">Удалить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+
+    $('.btn-edit-card').click(function () {
+        let $modal = $('#editModal').clone().removeAttr('id');
+        let $btn = $(this);
+
+        $modal.find('[id="create-name"]').val($btn.attr('card-name'));
+        $modal.find('[id="create-info-url"]').val($btn.attr('card-info-url'));
+        $modal.find('[id="default-bank"]').val($btn.attr('card-bank-id'));
+        $modal.find('[id="default-bank"]').text('Было: ' + $btn.attr('card-bank-name'));
+        $modal.find('[id="create-cashback"]').attr('checked', $btn.attr('card-cashback') !== 'false');
+        $modal.find('[id="create-mile"]').attr('checked', $btn.attr('card-mile') !== 'false');
+        $modal.find('[id="create-point"]').attr('checked', $btn.attr('card-point') !== 'false');
+        $modal.find('[id="create-free"]').attr('checked', $btn.attr('card-service-free') !== 'false');
+
+        $modal.find('[name="id"]').val($btn.attr('card-id'));
+
+        $modal.modal();
+    });
+
+    $('.btn-create-card').click(function () {
+        let $modal = $('#createModal').clone().removeAttr('id');
+        $modal.modal();
+    })
+
+</script>
+
+<footer th:replace="fragments :: footer"></footer>
+</html>
