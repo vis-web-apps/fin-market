@@ -30,6 +30,11 @@ public class MainController {
         return "index";
     }
 
+    @GetMapping(value = "/info")
+    public String getInfoPage() {
+        return "info";
+    }
+
     @GetMapping(value = "/admin")
     public String getAdminPage() {
         return "admin";
