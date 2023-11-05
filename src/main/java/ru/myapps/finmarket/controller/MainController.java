@@ -40,6 +40,11 @@ public class MainController {
         return "faq";
     }
 
+    @GetMapping(value = "/cooperation")
+    public String getCooperationPage() {
+        return "cooperation";
+    }
+
     @GetMapping(value = "/admin")
     public String getAdminPage() {
         return "admin";
