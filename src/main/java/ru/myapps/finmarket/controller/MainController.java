@@ -35,6 +35,11 @@ public class MainController {
         return "info";
     }
 
+    @GetMapping(value = "/faq")
+    public String getFAQPage() {
+        return "faq";
+    }
+
     @GetMapping(value = "/admin")
     public String getAdminPage() {
         return "admin";
