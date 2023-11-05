@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"><title>Финансовый супермаркет</title></head>
+
+<body class="container-fluid" style="width: 80%; margin-bottom: 100px">
+<nav th:replace="fragments :: navigation"></nav>
+
+<h3 class="text-center text-color-custom mb-5 mt-5">Частые вопросы (FAQ)</h3>
+
+<div class="row mb-5">
+    <div class="col-md-3"></div>
+    <div class="card col-md-6 ml-auto mr-auto" style="padding: 0 0">
+        <h5 class="card-header main-color text-white">
+            Как найти и выбрать нужный продукт?
+        </h5>
+        <p class="card-body text-left text-color-custom">
+            Вы можете искать финансовые продукты через соответствующие пункты меню сайта. <br>
+            В меню по каждому направлению (накопительные счета, карточные продукты и так далее) есть продуктовые каталоги с подробной
+            информацией о продукте, а также специальные предложения от банков.<br>
+            <br>
+            Продукт можно найти по определенным параметрам в каталогах продуктов в соответствующем пункте меню.
+        </p>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-md-3"></div>
+    <div class="card col-md-6 ml-auto mr-auto" style="padding: 0 0">
+        <h5 class="card-header main-color text-white">
+            Что такое конвертер валют?
+        </h5>
+        <p class="card-body text-left text-color-custom">
+            Конвертер валют предоставляет возможность в режиме онлайн пересчитать нужную сумму из одной валюты в другую, например доллар в рубль.<br>
+            Все пересчеты конвертер выполняет на основе официальных данных о котировках международных валют банков-партнеров.<br>
+            <br>
+            Информация о котировках валют обновляется каждый час. Онлайн-конвертер валют очень удобен в использовании и сэкономит ваше время.
+        </p>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-md-3"></div>
+    <div class="card col-md-6 ml-auto mr-auto" style="padding: 0 0">
+        <h5 class="card-header main-color text-white">
+            Как посмотреть информацию о специальных предложениях банков?
+        </h5>
+        <p class="card-body text-left text-color-custom">
+            Вы можете посмотреть информацию о графике работы нужного банка через пункт меню "Акции банков"
+        </p>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+</body>
+
+<footer th:replace="fragments :: footer"></footer>
+</html>
