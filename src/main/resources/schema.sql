@@ -68,3 +68,15 @@ CREATE TABLE IF NOT EXISTS promo (
                      foreign key (bank_id) references banks(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS branches (
+    id int(11) NOT NULL IDENTITY PRIMARY KEY,
+    bank_id varchar(30) NOT NULL,
+    name text NOT NULL,
+    bic varchar(30) NOT NULL,
+    address varchar(255) NOT NULL,
+    schedule varchar(255) NOT NULL,
+    contact_phone varchar(16) NOT NULL,
+    contact_email varchar(255) NOT NULL,
+    foreign key (bank_id) references banks(id) ON DELETE CASCADE
+    );
+
