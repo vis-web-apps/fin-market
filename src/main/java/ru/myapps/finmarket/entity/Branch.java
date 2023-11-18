@@ -7,7 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "branch")
+@Table(name = "branches")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,8 +17,9 @@ public class Branch {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "bank_id")
-    private String bank_id;
+    @ManyToOne
+    @JoinColumn(name = "bank_id", referencedColumnName = "id")
+    private Bank bank;
 
     @Column(name = "name")
     private String name;
@@ -33,9 +34,9 @@ public class Branch {
     private String schedule;
 
     @Column(name = "contact_phone")
-    private String contact_phone;
+    private String contactPhone;
 
     @Column(name = "contact_email")
-    private String contact_email;
+    private String contactEmail;
 
 }

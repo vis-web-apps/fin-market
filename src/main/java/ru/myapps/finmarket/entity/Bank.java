@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "banks")
@@ -23,5 +24,8 @@ public class Bank {
 
     @Column(name = "web_site")
     private String webSite;
+
+    @OneToMany(mappedBy = "bank", fetch = FetchType.LAZY)
+    private List<Branch> branches;
 
 }
