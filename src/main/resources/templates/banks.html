@@ -14,7 +14,7 @@
         <form class="container mt-0 mb-0 col-md-8 ml-auto mr-auto" th:action="@{/banks}" method="get">
             <div class="form-row">
                 <div class="form-group col-md-4">
-                    <input type="text" class="form-control" id="query" name="query" placeholder="Введите название банка..."
+                    <input type="text" class="form-control" id="query" name="query" placeholder="Введите название банка или БИК..."
                            th:value="${query == null ? '' : query}">
                 </div>
                 <div class="form-group col-md-2">

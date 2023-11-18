@@ -19,7 +19,7 @@ public class BankController {
     @GetMapping(value = "/banks")
     public String getBanks(@RequestParam(required = false) String query, Model model) {
 
-        model.addAttribute("banks", bankService.getAllBanks());
+        model.addAttribute("banks", bankService.getAllBanks(query));
         model.addAttribute("query", query);
 
         return "banks";

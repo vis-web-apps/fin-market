@@ -24,6 +24,10 @@ public class BankService {
         return repository.findAll();
     }
 
+    public List<Bank> getAllBanks(String query) {
+        return repository.findAll(query);
+    }
+
     public void create(BankDto dto) {
         Bank bank = new Bank();
 
