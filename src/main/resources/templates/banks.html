@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+    <meta charset="UTF-8"/>
+    <title>Финансовый супермаркет</title></head>
+
+<body class="container-fluid" style="width: 80%; margin-bottom: 100px">
+
+    <nav th:replace="fragments :: navigation"></nav>
+
+    <h3 class="text-center text-color-custom mb-5 mt-5">Банки</h3>
+
+    <div class="form-row mb-2">
+        <form class="container mt-0 mb-0 col-md-8 ml-auto mr-auto" th:action="@{/banks}" method="get">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <input type="text" class="form-control" id="query" name="query" placeholder="Введите название банка..."
+                           th:value="${query == null ? '' : query}">
+                </div>
+                <div class="form-group col-md-2">
+                    <button type="submit" class="btn main-color text-white">Найти</button>
+                </div>
+                <div class="form-group col-md-3">
+                    <a class="btn btn-success text-white btn-create-bank"
+                       th:hidden="${#authentication.principal == 'anonymousUser'}">Добавить банк</a>
+                </div>
+                <div class="form-group col-md-3">
+                    <a class="btn btn-success text-white btn-create-branch"
+                       th:hidden="${#authentication.principal == 'anonymousUser'}">Добавить отделение</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="form-row mb-4" th:each="bank : ${banks}">
+        <div class="card col-small-12 col-md-8 ml-auto mr-auto" style="padding: 0 0">
+            <div class="card-header main-color text-white pl-0 pb-0">
+                <div class="row">
+                    <p class="text-white text-center col-xs-3 col-md-3 pl-0" th:text="${bank.name}"></p>
+                    <div class="col-md-8"></div>
+                    <div class="p-0 col-xs-1 col-md-1">
+                        <button class="pl-2 ml-3 pt-0 text-white text-center btn border-white main-color btn-edit-bank"
+                                th:hidden="${#authentication.principal == 'anonymousUser'}"
+                                style="height: 70%; width: 45%"
+                                th:edit-bank-id="${bank.id}"
+                                th:edit-bank-name="${bank.name}"
+                                th:edit-bank-bic="${bank.bic}"
+                                th:edit-bank-website="${bank.webSite}"
+                        >🖉</button>
+                        <button class="pl-2 ml-3 pt-0 text-white text-center btn border-white main-color btn-edit-bank"
+                                th:hidden="${#authentication.principal != 'anonymousUser'}"
+                                style="height: 70%; width: 45%"
+                                th:edit-bank-id="${bank.id}"
+                                th:edit-bank-name="${bank.name}"
+                                th:edit-bank-bic="${bank.bic}"
+                                th:edit-bank-website="${bank.webSite}"
+                        >&#128712;</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <p class="text-color-custom text-center pl-3 col-xs-3 col-md-3 h6"><i>Наименование</i></p>
+                <p class="text-color-custom text-center col-xs-5 col-md-5 h6"><i>Адрес</i></p>
+                <p class="text-color-custom text-center col-xs-3 col-md-3 h6"><i>Телефон</i></p>
+            </div>
+
+            <hr/>
+
+            <div class="card-body p-0" th:each="elem : ${bank.branches}">
+                <div class="row">
+                    <p class="card-text text-center col-xs-3 col-md-3" th:text="${elem.name}"></p>
+                    <p class="card-text text-center col-xs-5 col-md-5" th:text="${elem.address}"></p>
+                    <p class="card-text text-center col-xs-3 col-md-3" th:text="${elem.contactPhone}"></p>
+
+                    <div class="p-0 col-xs-1 col-md-1">
+                        <button class="pl-2 pt-0 text-white text-center btn main-color btn-edit-branch"
+                                th:hidden="${#authentication.principal == 'anonymousUser'}"
+                                style="height: 70%; width: 45%"
+                                th:edit-branch-id="${elem.id}"
+                                th:edit-branch-name="${elem.name}"
+                                th:edit-branch-bank-id="${elem.bank.id}"
+                                th:edit-branch-bank-name="${elem.bank.name}"
+                                th:edit-branch-bic="${elem.bic}"
+                                th:edit-branch-schedule="${elem.schedule}"
+                                th:edit-branch-address="${elem.address}"
+                                th:edit-branch-phone="${elem.contactPhone}"
+                                th:edit-branch-email="${elem.contactEmail}"
+                        >🖉
+                        </button>
+                        <button class="pl-2 pt-0 text-white text-center btn main-color btn-edit-branch"
+                                th:hidden="${#authentication.principal != 'anonymousUser'}"
+                                style="height: 70%; width: 45%"
+                                th:edit-branch-id="${elem.id}"
+                                th:edit-branch-name="${elem.name}"
+                                th:edit-branch-bank-id="${elem.bank.id}"
+                                th:edit-branch-bank-name="${elem.bank.name}"
+                                th:edit-branch-bic="${elem.bic}"
+                                th:edit-branch-schedule="${elem.schedule}"
+                                th:edit-branch-address="${elem.address}"
+                                th:edit-branch-phone="${elem.contactPhone}"
+                                th:edit-branch-email="${elem.contactEmail}"
+                        >&#128712;
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="createBankModal" tabindex="-1" role="dialog" aria-labelledby="createBankModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form class="container mt-2 mb-2">
+                        <div class="modal-header main-color">
+                            <h4 class="modal-title text-white" id="createBankModalLabel">Добавление нового банка</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span class="text-white" aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="text-center mt-3">
+                            <div class="form-row mb-2">
+                                <div class="form-group col-sm-12">
+
+                                    <div class="form-row mb-2">
+                                        <div class="form-group col-sm-12">
+                                            <label for="name" class="h5 mb-3">Название</label>
+                                            <input type="text" class="form-control" id="name" name="name"
+                                                   placeholder="Название..." required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mb-2">
+                                        <div class="form-group col-sm-12">
+                                            <label for="bic" class="h5 mb-3">БИК</label>
+                                            <input type="text" class="form-control" id="bic" name="bic" placeholder="БИК..."
+                                                   required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mb-2">
+                                        <div class="form-group col-sm-12">
+                                            <label for="webSite" class="h5 mb-3">Сайт</label>
+                                            <input type="text" class="form-control" id="webSite" name="webSite"
+                                                   placeholder="Сайт..." required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                            <button type="submit" th:formaction="@{/banks/create}" th:formmethod="post"
+                                    class="btn btn-success">Создать
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="editBankModal" tabindex="-1" role="dialog" aria-labelledby="editBankModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form class="container mt-2 mb-2">
+                        <div class="modal-header main-color">
+                            <h4 class="modal-title text-white" id="editBankModalLabel">Редактирование банка</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span class="text-white" aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <input type="text" name="id" hidden>
+                        <div class="text-center mt-3">
+                            <div class="form-row mb-2">
+                                <div class="form-group col-sm-12">
+
+                                    <div class="form-row mb-2">
+                                        <div class="form-group col-sm-12">
+                                            <label for="edit-bank-name" class="h5 mb-3">Название</label>
+                                            <input type="text" class="form-control" id="edit-bank-name" name="name"
+                                                   placeholder="Название..." required th:readonly="${#authentication.principal == 'anonymousUser'}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mb-2">
+                                        <div class="form-group col-sm-12">
+                                            <label for="edit-bank-bic" class="h5 mb-3">БИК</label>
+                                            <input type="text" class="form-control" id="edit-bank-bic" name="bic"
+                                                   placeholder="БИК..." required th:readonly="${#authentication.principal == 'anonymousUser'}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mb-2">
+                                        <div class="form-group col-sm-12">
+                                            <label for="edit-bank-website" class="h5 mb-3">Сайт</label>
+                                            <input type="text" class="form-control" id="edit-bank-website" name="webSite"
+                                                   placeholder="Сайт..." required th:readonly="${#authentication.principal == 'anonymousUser'}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                            <button type="submit" th:formaction="@{/banks/edit}" th:formmethod="post" class="btn btn-success"
+                                    th:hidden="${#authentication.principal == 'anonymousUser'}">Сохранить
+                            </button>
+                            <button type="submit" th:formaction="@{/banks/delete}" th:formmethod="post" class="btn btn-danger"
+                                    th:hidden="${#authentication.principal == 'anonymousUser'}">Удалить
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="createBranchModal" tabindex="-1" role="dialog" aria-labelledby="createBranchModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form class="container mt-2 mb-2">
+                        <div class="modal-header main-color">
+                            <h4 class="modal-title text-white" id="createBranchModalLabel">Редактирование отделения</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span class="text-white" aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <input type="text" name="bankId" hidden>
+                        <div class="text-center">
+                            <div class="form-row mb-2">
+                                <div class="form-group col-sm-12">
+
+                                    <div class="form-row mb-2">
+                                        <div class="form-group col-sm-12">
+                                            <label for="create-branch-bank-name" class="h5 mt-3 mb-3">Банк:</label>
+                                            <select class="form-control selectpicker" id="create-branch-bank-name"
+                                                    name="bank">
+                                                <option th:each="bank : ${banks}"
+                                                        th:value="${bank.id}"
+                                                        th:text="${bank.name}">
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mb-2">
+                                        <div class="form-group col-sm-12">
+                                            <label for="create-branch-name" class="h5 mb-3">Название</label>
+                                            <input type="text" class="form-control" id="create-branch-name" name="name"
+                                                   placeholder="Название..." required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mb-2">
+                                        <div class="form-group col-sm-12">
+                                            <label for="create-branch-bic" class="h5 mb-3">БИК</label>
+                                            <input type="text" class="form-control" id="create-branch-bic" name="bic"
+                                                   placeholder="БИК..." required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mb-2">
+                                        <div class="form-group col-sm-12">
+                                            <label for="create-branch-address" class="h5 mb-3">Адрес</label>
+                                            <input type="text" class="form-control" id="create-branch-address" name="address"
+                                                   placeholder="Адрес..." required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mb-2">
+                                        <div class="form-group col-sm-12">
+                                            <label for="create-branch-schedule" class="h5 mb-3">Расписание</label>
+                                            <input type="text" class="form-control" id="create-branch-schedule" name="schedule"
+                                                   placeholder="Расписание..." required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mb-2">
+                                        <div class="form-group col-sm-12">
+                                            <label for="create-branch-phone" class="h5 mb-3">Контактный телефон</label>
+                                            <input type="tel" class="form-control" id="create-branch-phone" name="contactPhone"
+                                                   placeholder="Телефон..." required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mb-2">
+                                        <div class="form-group col-sm-12">
+                                            <label for="create-branch-email" class="h5 mb-3">Адрес электронной почты</label>
+                                            <input type="email" class="form-control" id="create-branch-email" name="contactEmail"
+                                                   placeholder="Email..." required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                            <button type="submit" th:formaction="@{/branches/create}" th:formmethod="post"
+                                    class="btn btn-success">Создать
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="editBranchModal" tabindex="-1" role="dialog" aria-labelledby="editBranchModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form class="container mt-2 mb-2">
+                        <div class="modal-header main-color">
+                            <h4 class="modal-title text-white" id="editBranchModalLabel">Редактирование отделения</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span class="text-white" aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <input type="text" name="id" hidden>
+                        <div class="text-center">
+                            <div class="form-row mb-2">
+                                <div class="form-group col-sm-12">
+
+                                    <div class="form-row mb-2">
+                                        <div class="form-group col-sm-12">
+                                            <label for="edit-branch-bank-name" class="h5 mt-3 mb-3">Банк:</label>
+                                            <select class="form-control selectpicker" id="edit-branch-bank-name"
+                                                    name="bank" th:readonly="${#authentication.principal == 'anonymousUser'}">
+                                                <option id="default-bank"></option>
+                                                <option th:each="bank : ${banks}"
+                                                        th:value="${bank.id}"
+                                                        th:text="${bank.name}" th:hidden="${#authentication.principal == 'anonymousUser'}">
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mb-2">
+                                        <div class="form-group col-sm-12">
+                                            <label for="edit-branch-name" class="h5 mb-3">Название</label>
+                                            <input type="text" class="form-control" id="edit-branch-name" name="name"
+                                                   placeholder="Название..." required th:readonly="${#authentication.principal == 'anonymousUser'}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mb-2">
+                                        <div class="form-group col-sm-12">
+                                            <label for="edit-branch-bic" class="h5 mb-3">БИК</label>
+                                            <input type="text" class="form-control" id="edit-branch-bic" name="bic"
+                                                   placeholder="БИК..." required th:readonly="${#authentication.principal == 'anonymousUser'}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mb-2">
+                                        <div class="form-group col-sm-12">
+                                            <label for="edit-branch-address" class="h5 mb-3">Адрес</label>
+                                            <input type="text" class="form-control" id="edit-branch-address" name="address"
+                                                   placeholder="Адрес..." required th:readonly="${#authentication.principal == 'anonymousUser'}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mb-2">
+                                        <div class="form-group col-sm-12">
+                                            <label for="edit-branch-schedule" class="h5 mb-3">Расписание</label>
+                                            <input type="text" class="form-control" id="edit-branch-schedule" name="schedule"
+                                                   placeholder="Расписание..." required th:readonly="${#authentication.principal == 'anonymousUser'}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mb-2">
+                                        <div class="form-group col-sm-12">
+                                            <label for="edit-branch-phone" class="h5 mb-3">Контактный телефон</label>
+                                            <input type="tel" class="form-control" id="edit-branch-phone" name="contactPhone"
+                                                   placeholder="Телефон..." required th:readonly="${#authentication.principal == 'anonymousUser'}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row mb-2">
+                                        <div class="form-group col-sm-12">
+                                            <label for="edit-branch-email" class="h5 mb-3">Адрес электронной почты</label>
+                                            <input type="email" class="form-control" id="edit-branch-email" name="contactEmail"
+                                                   placeholder="Email..." required th:readonly="${#authentication.principal == 'anonymousUser'}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                            <button type="submit" th:formaction="@{/branches/edit}" th:formmethod="post" class="btn btn-success"
+                                    th:hidden="${#authentication.principal == 'anonymousUser'}">Сохранить
+                            </button>
+                            <button type="submit" th:formaction="@{/branches/delete}" th:formmethod="post" class="btn btn-danger"
+                                    th:hidden="${#authentication.principal == 'anonymousUser'}">Удалить
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+<script th:inline="javascript">
+
+    $('.btn-create-bank').click(function () {
+        let $modal = $('#createBankModal').clone().removeAttr('id');
+        $modal.modal();
+    })
+
+    $('.btn-edit-bank').click(function () {
+        let $modal = $('#editBankModal').clone().removeAttr('id');
+        let $btn = $(this);
+
+        $modal.find('[name="id"]').val($btn.attr('edit-bank-id'));
+        $modal.find('[id="edit-bank-name"]').val($btn.attr('edit-bank-name'));
+        $modal.find('[id="edit-bank-bic"]').val($btn.attr('edit-bank-bic'));
+        $modal.find('[id="edit-bank-website"]').val($btn.attr('edit-bank-website'));
+
+        $modal.modal();
+    })
+
+    $('.btn-create-branch').click(function () {
+        let $modal = $('#createBranchModal').clone().removeAttr('id');
+        $modal.modal();
+    })
+
+    $('.btn-edit-branch').click(function () {
+        let $modal = $('#editBranchModal').clone().removeAttr('id');
+        let $btn = $(this);
+
+        $modal.find('[name="id"]').val($btn.attr('edit-branch-id'));
+        $modal.find('[id="edit-branch-name"]').val($btn.attr('edit-branch-name'));
+        $modal.find('[id="edit-branch-bic"]').val($btn.attr('edit-branch-bic'));
+        $modal.find('[id="default-bank"]').val($btn.attr('edit-branch-bank-id'));
+        $modal.find('[id="default-bank"]').text('Было: ' + $btn.attr('edit-branch-bank-name'));
+        $modal.find('[id="edit-branch-schedule"]').val($btn.attr('edit-branch-schedule'));
+        $modal.find('[id="edit-branch-address"]').val($btn.attr('edit-branch-address'));
+        $modal.find('[id="edit-branch-phone"]').val($btn.attr('edit-branch-phone'));
+        $modal.find('[id="edit-branch-email"]').val($btn.attr('edit-branch-email'));
+
+        $modal.modal();
+    })
+
+</script>
+
+<footer th:replace="fragments :: footer"></footer>
+</html>
