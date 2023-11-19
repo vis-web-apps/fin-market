@@ -86,9 +86,9 @@ CREATE TABLE IF NOT EXISTS cards_products (
 
 CREATE TABLE IF NOT EXISTS promo (
                      id int(11) NOT NULL IDENTITY PRIMARY KEY,
-                     bank_id varchar(30) NOT NULL,
+                     bank_id int(11) NOT NULL,
                      promo_text text NOT NULL,
-                     promo_name varchar(30) NOT NULL,
+                     promo_name varchar(50) NOT NULL,
                      foreign key (bank_id) references banks(id) ON DELETE CASCADE
 );
 

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+  <meta charset="UTF-8"/>
+  <title>Финансовый супермаркет</title></head>
+
+<body class="container-fluid" style="width: 80%; margin-bottom: 100px">
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<h3 class="text-center text-color-custom mb-5 mt-5">Акции</h3>
+
+<div class="row mb-3">
+  <div class="col-md-8 ml-auto mr-auto">
+    <div class="row">
+      <div class="col-md-10"></div>
+      <div class="col-md-2 ml-auto">
+        <a class="btn btn-success text-white btn-create-promo" th:hidden="${#authentication.principal == 'anonymousUser'}" style="width: 100%">Создать</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="form-row mb-4" th:each="promo : ${promos}">
+  <div class="card col-small-12 col-md-8 ml-auto mr-auto" style="padding: 0 0">
+    <div class="card-header main-color text-white pl-0 pb-0">
+      <div class="row">
+        <p class="text-white text-left ml-5 col-xs-3 col-md-3 pl-0" th:text="${promo.bank.name}"></p>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <p class="text-color-custom col-md-12 text-center h6" th:text="${promo.promoName}"><i></i></p>
+    </div>
+
+    <hr/>
+
+    <div class="card-body">
+      <div class="row">
+        <div th:class="${#authentication.principal == 'anonymousUser' ? 'col-md-12' : 'col-md-11'}">
+          <p class="card-text" th:utext="${promo.promoText}"></p>
+        </div>
+
+        <div class="p-0 col-xs-1 col-md-1">
+          <button class="pl-2 pt-0 text-white text-center btn main-color btn-edit-promo"
+                  th:hidden="${#authentication.principal == 'anonymousUser'}"
+                  style="width: 45%"
+                  th:edit-promo-id="${promo.id}"
+                  th:edit-promo-bank-id="${promo.bank.id}"
+                  th:edit-promo-bank-name="${promo.bank.name}"
+                  th:edit-promo-name="${promo.promoName}"
+                  th:edit-promo-text="${promo.promoText}"
+          >🖉</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="createPromoModal" tabindex="-1" role="dialog" aria-labelledby="createPromoModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form class="container mt-2 mb-2">
+          <div class="modal-header main-color">
+            <h4 class="modal-title text-white" id="createPromoModalLabel">Создание новой акции</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span class="text-white" aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="text-center mt-3">
+            <div class="form-row mb-2">
+              <div class="form-group col-sm-12">
+
+                <div class="form-row mb-2">
+                  <div class="form-group col-sm-12">
+                    <label for="create-promo-bank-name" class="h5 mt-3 mb-3">Банк:</label>
+                    <select class="form-control selectpicker" id="create-promo-bank-name"
+                            name="bank">
+                      <option th:each="bank : ${banks}"
+                              th:value="${bank.id}"
+                              th:text="${bank.name}">
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-row mb-2">
+                  <div class="form-group col-sm-12">
+                    <label for="name" class="h5 mb-3">Название</label>
+                    <input type="text" class="form-control" id="name" name="promoName"
+                           placeholder="Название..." required>
+                  </div>
+                </div>
+
+                <div class="form-row mb-2">
+                  <div class="form-group col-sm-12">
+                    <label for="promo-text" class="h5 mb-3">Текст (формат html)</label>
+                    <textarea type="text" class="form-control" id="promo-text" name="promoText" placeholder="Текст..."
+                              required></textarea>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            <button type="submit" th:formaction="@{/promo/create}" th:formmethod="post"
+                    class="btn btn-success">Создать
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="editPromoModal" tabindex="-1" role="dialog" aria-labelledby="editPromoModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form class="container mt-2 mb-2">
+          <div class="modal-header main-color">
+            <h4 class="modal-title text-white" id="editPromoModalLabel">Редактирование банка</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span class="text-white" aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <input type="text" name="id" hidden>
+          <div class="text-center mt-3">
+            <div class="form-row mb-2">
+              <div class="form-group col-sm-12">
+
+                <div class="form-row mb-2">
+                  <div class="form-group col-sm-12">
+                    <label for="edit-promo-bank-name" class="h5 mt-3 mb-3">Банк:</label>
+                    <select class="form-control selectpicker" id="edit-promo-bank-name"
+                            name="bank">
+                      <option id="default-bank"></option>
+                      <option th:each="bank : ${banks}"
+                              th:value="${bank.id}"
+                              th:text="${bank.name}">
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-row mb-2">
+                  <div class="form-group col-sm-12">
+                    <label for="edit-name" class="h5 mb-3">Название</label>
+                    <input type="text" class="form-control" id="edit-name" name="promoName"
+                           placeholder="Название..." required>
+                  </div>
+                </div>
+
+                <div class="form-row mb-2">
+                  <div class="form-group col-sm-12">
+                    <label for="edit-promo-text" class="h5 mb-3">Текст (формат html)</label>
+                    <textarea type="text" class="form-control" id="edit-promo-text" name="promoText" placeholder="Текст..."
+                              required></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            <button type="submit" th:formaction="@{/promo/edit}" th:formmethod="post" class="btn btn-success">Сохранить
+            </button>
+            <button type="submit" th:formaction="@{/promo/delete}" th:formmethod="post" class="btn btn-danger">Удалить
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+
+<script th:inline="javascript">
+
+  $('.btn-create-promo').click(function () {
+    let $modal = $('#createPromoModal').clone().removeAttr('id');
+    $modal.modal();
+  })
+
+  $('.btn-edit-promo').click(function () {
+    let $modal = $('#editPromoModal').clone().removeAttr('id');
+    let $btn = $(this);
+
+    $modal.find('[name="id"]').val($btn.attr('edit-promo-id'));
+    $modal.find('[id="default-bank"]').val($btn.attr('edit-promo-bank-id'));
+    $modal.find('[id="default-bank"]').text('Было: ' + $btn.attr('edit-promo-bank-name'));
+    $modal.find('[id="edit-name"]').val($btn.attr('edit-promo-name'));
+    $modal.find('[id="edit-promo-text"]').val($btn.attr('edit-promo-text'));
+
+    $modal.modal();
+  })
+
+</script>
+
+<footer th:replace="fragments :: footer"></footer>
+</html>
