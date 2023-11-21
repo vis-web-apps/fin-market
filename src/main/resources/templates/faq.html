@@ -3,57 +3,139 @@
 <head th:replace="fragments :: head"><title>Финансовый супермаркет</title></head>
 
 <body class="container-fluid" style="width: 80%; margin-bottom: 100px">
-<nav th:replace="fragments :: navigation"></nav>
+    <nav th:replace="fragments :: navigation"></nav>
 
-<h3 class="text-center text-color-custom mb-5 mt-5">Частые вопросы (FAQ)</h3>
+    <h3 class="text-center text-color-custom mb-5 mt-5">Частые вопросы (FAQ)</h3>
 
-<div class="row mb-5">
-    <div class="col-md-3"></div>
-    <div class="card col-md-6 ml-auto mr-auto" style="padding: 0 0">
-        <h5 class="card-header main-color text-white">
-            Как найти и выбрать нужный продукт?
-        </h5>
-        <p class="card-body text-left text-color-custom">
-            Вы можете искать финансовые продукты через соответствующие пункты меню сайта. <br>
-            В меню по каждому направлению (накопительные счета, карточные продукты и так далее) есть продуктовые каталоги с подробной
-            информацией о продукте, а также специальные предложения от банков.<br>
-            <br>
-            Продукт можно найти по определенным параметрам в каталогах продуктов в соответствующем пункте меню.
-        </p>
+    <div class="row mb-3">
+        <div class="col-md-6 ml-auto mr-auto">
+            <div class="row">
+                <div class="col-md-8"></div>
+                <div class="col-md-4 ml-auto">
+                    <a class="btn btn-success text-white btn-create-feedback" style="width: 100%">Задать вопрос</a>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-3"></div>
-</div>
 
-<div class="row mb-5">
-    <div class="col-md-3"></div>
-    <div class="card col-md-6 ml-auto mr-auto" style="padding: 0 0">
-        <h5 class="card-header main-color text-white">
-            Что такое конвертер валют?
-        </h5>
-        <p class="card-body text-left text-color-custom">
-            Конвертер валют предоставляет возможность в режиме онлайн пересчитать нужную сумму из одной валюты в другую, например доллар в рубль.<br>
-            Все пересчеты конвертер выполняет на основе официальных данных о котировках международных валют банков-партнеров.<br>
-            <br>
-            Информация о котировках валют обновляется каждый час. Онлайн-конвертер валют очень удобен в использовании и сэкономит ваше время.
-        </p>
+    <div class="row mb-5">
+        <div class="col-md-3"></div>
+        <div class="card col-md-6 ml-auto mr-auto" style="padding: 0 0">
+            <h5 class="card-header main-color text-white">
+                Как найти и выбрать нужный продукт?
+            </h5>
+            <p class="card-body text-left text-color-custom">
+                Вы можете искать финансовые продукты через соответствующие пункты меню сайта. <br>
+                В меню по каждому направлению (накопительные счета, карточные продукты и так далее) есть продуктовые каталоги с подробной
+                информацией о продукте, а также специальные предложения от банков.<br>
+                <br>
+                Продукт можно найти по определенным параметрам в каталогах продуктов в соответствующем пункте меню.
+            </p>
+        </div>
+        <div class="col-md-3"></div>
     </div>
-    <div class="col-md-3"></div>
-</div>
 
-<div class="row mb-5">
-    <div class="col-md-3"></div>
-    <div class="card col-md-6 ml-auto mr-auto" style="padding: 0 0">
-        <h5 class="card-header main-color text-white">
-            Как посмотреть информацию о специальных предложениях банков?
-        </h5>
-        <p class="card-body text-left text-color-custom">
-            Вы можете посмотреть информацию о графике работы нужного банка через пункт меню "Акции банков"
-        </p>
+    <div class="row mb-5">
+        <div class="col-md-3"></div>
+        <div class="card col-md-6 ml-auto mr-auto" style="padding: 0 0">
+            <h5 class="card-header main-color text-white">
+                Что такое конвертер валют?
+            </h5>
+            <p class="card-body text-left text-color-custom">
+                Конвертер валют предоставляет возможность в режиме онлайн пересчитать нужную сумму из одной валюты в другую, например доллар в рубль.<br>
+                Все пересчеты конвертер выполняет на основе официальных данных о котировках международных валют банков-партнеров.<br>
+                <br>
+                Информация о котировках валют обновляется каждый час. Онлайн-конвертер валют очень удобен в использовании и сэкономит ваше время.
+            </p>
+        </div>
+        <div class="col-md-3"></div>
     </div>
-    <div class="col-md-3"></div>
-</div>
+
+    <div class="row mb-5">
+        <div class="col-md-3"></div>
+        <div class="card col-md-6 ml-auto mr-auto" style="padding: 0 0">
+            <h5 class="card-header main-color text-white">
+                Как посмотреть информацию о специальных предложениях банков?
+            </h5>
+            <p class="card-body text-left text-color-custom">
+                Вы можете посмотреть информацию о графике работы нужного банка через пункт меню "Акции банков"
+            </p>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form class="container mt-2 mb-2">
+                    <div class="modal-header main-color">
+                        <h4 class="modal-title text-white" id="createModalLabel">Задать вопрос</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span class="text-white" aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="text-center">
+                        <div class="form-row mb-2">
+                            <div class="form-group col-sm-12">
+
+                                <div class="form-row mt-3">
+                                    <div class="form-group col-sm-12">
+                                        <label for="name" class="h5 mb-3">Введите Ваши ФИО</label>
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="ФИО..." required>
+                                    </div>
+                                </div>
+
+                                <div class="form-row mt-3">
+                                    <div class="form-group col-sm-12">
+                                        <label for="phone" class="h5 mb-3">Ваш контактный телефон</label>
+                                        <input type="tel" class="form-control" id="phone" name="phone" placeholder="+7-999-999-99-99" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-row mt-3">
+                                    <div class="form-group col-sm-12">
+                                        <label for="email" class="h5 mb-3">Адрес Вашей электронной почты</label>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email..." required>
+                                    </div>
+                                </div>
+
+                                <div class="form-row mb-2">
+                                    <div class="form-group col-sm-12">
+                                        <label for="text" class="h5 mb-3">Текст</label>
+                                        <textarea type="text" class="form-control" id="text" rows="6" name="text" placeholder="Текст..."
+                                                  required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <button type="submit" th:formaction="@{/feedback/create}" th:formmethod="post" class="btn btn-success">Отправить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 </body>
+
+<script type="text/javascript">
+    $('.btn-create-feedback').click(function () {
+        let $modal = $('#createModal').clone().removeAttr('id');
+        $modal.modal();
+    })
+
+    $(document).ready(function () {
+        let phone = $('#phone').get(0).defaultValue;
+        if (phone === null || phone === "") {
+            $("#phone").mask("+7-999-999-99-99");
+        } else {
+            $("#phone").mask("+7-999-999-99-99").val(phone);
+        }
+    });
+</script>
 
 <footer th:replace="fragments :: footer"></footer>
 </html>

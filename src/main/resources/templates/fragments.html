@@ -39,6 +39,7 @@
                         <a class="dropdown-item main-color text-white" th:href="@{/info}">Организационно-правовая информация</a>
                         <a class="dropdown-item main-color text-white" th:href="@{/cooperation}">Сотрудничество</a>
                         <a class="dropdown-item main-color text-white" th:href="@{/faq}">FAQ</a>
+                        <a class="dropdown-item main-color text-white" th:hidden="${#authentication.principal == 'anonymousUser'}" th:href="@{/feedback}">Обратная связь</a>
                         <a class="dropdown-item main-color text-white" th:hidden="${#authentication.principal == 'anonymousUser'}" th:href="@{/logout}">Выйти</a>
                     </div>
                 </li>

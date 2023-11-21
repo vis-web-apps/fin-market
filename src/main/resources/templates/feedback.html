@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"><title>Финансовый супермаркет</title></head>
+
+<body class="container-fluid" style="width: 80%; margin-bottom: 100px">
+<nav th:replace="fragments :: navigation"></nav>
+
+<h3 class="text-center text-color-custom mb-5 mt-5">Обратная связь</h3>
+
+<!--    <div class="form-row mb-4" th:each="feedback : ${feedbacks}">-->
+<table id="operations" class="table table-bordered">
+    <thead class="main-color text-white">
+    <tr>
+        <th class="text-center">Имя</th>
+        <th class="text-center">Телефон</th>
+        <th class="text-center">Email</th>
+        <th class="text-center">Текст обращения</th>
+        <th class="text-center">Обработано</th>
+    </tr>
+    </thead>
+    <tbody th:each="feedback : ${feedbacks}">
+    <tr class="item">
+        <td class="text-center pt-1 pb-1" th:text="${feedback.name}"></td>
+        <td class="text-center pt-1 pb-1" th:text="${feedback.phone}"></td>
+        <td class="text-center pt-1 pb-1" th:text="${feedback.email}"></td>
+        <td class="text-center pt-1 pb-1" th:text="${feedback.text}"></td>
+        <td class="text-center pt-1 pb-1">
+            <input class="btn btn-change-status" type="checkbox" onchange="toggleCheckbox(this)" th:checked="${feedback.processed}" th:data-id="${feedback.id}">
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!--    </div>-->
+<footer th:replace="fragments :: footer"></footer>
+</body>
+
+<script type="text/javascript">
+    function toggleCheckbox(e) {
+        let url = window.location.protocol + "//" + window.location.host + "/feedback/change-status"
+        $.post(url, {"id": e.getAttribute("data-id")}, function (data, status) {
+            console.log(e.getAttribute("data-id"));
+            console.log("success");
+        });
+    }
+</script>
+
+</html>

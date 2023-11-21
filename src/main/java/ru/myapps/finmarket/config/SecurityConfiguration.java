@@ -32,7 +32,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 // TODO: перед внедрением убрать h2-console из общего доступа
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/admin/**", "/feedback/**").hasRole("ADMIN")
                 .antMatchers("/css/**", "/js/**", "/h2-console/**").permitAll()
                 .antMatchers("/**").permitAll()
                 .anyRequest()
