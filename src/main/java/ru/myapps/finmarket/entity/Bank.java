@@ -1,5 +1,6 @@
 package ru.myapps.finmarket.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,7 +26,8 @@ public class Bank {
     @Column(name = "web_site")
     private String webSite;
 
-    @OneToMany(mappedBy = "bank", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "bank", orphanRemoval = true)
+    @JsonManagedReference
     private List<Branch> branches;
 
 }
